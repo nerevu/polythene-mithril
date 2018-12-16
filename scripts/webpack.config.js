@@ -7,7 +7,7 @@ module.exports = {
   context: path.resolve(__dirname, "../src"),
 
   entry: {
-    index: "../index.js",
+    index: "../index.coffee",
   },
 
   output: {
@@ -16,16 +16,16 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ["*", ".mjs", ".js"]
+    extensions: ["*", ".mjs", ".js", ".coffee"]
   },
 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.coffee$/,
         exclude: /node_modules/,
         use: [{
-          loader: "babel-loader"
+          loader: "coffee-loader"
         }]
       },
       {
