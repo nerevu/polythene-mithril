@@ -5,7 +5,7 @@ const config = require("./webpack.config.js");
 config.mode = "development";
 
 config.devServer = {
-  contentBase: path.resolve(__dirname, "../dist")
+  contentBase: path.resolve(__dirname, "../public")
 };
 
 config.watchOptions = {
