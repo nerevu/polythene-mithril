@@ -1,10 +1,12 @@
 const path = require('path')
-const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 
 const resolvedPath = fileOrDir => path.resolve(__dirname, fileOrDir)
+const devMode = process.env.NODE_ENV === 'development'
+
+console.log({devMode})
 
 module.exports = {
   mode: "development",
@@ -32,33 +34,32 @@ module.exports = {
 
   module: {
     rules: [{
-        test: /\.coffee$/,
-        exclude: /node_modules/,
         use: [{
           loader: "coffee-loader"
-        }]
+        }],
+        test: /\.coffee$/,
+        exclude: /node_modules/
       },
       {
-        test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
               modules: true,
-              sourceMap: true,
+              sourceMap: devMode,
               localIdentName: "[local]"
             }
           },
-        ]
+        ],
+        test: /\.css$/
       }
     ]
   },
 
   devServer: {
     contentBase: "public",
-    historyApiFallback: true,
-    compress: false
+    historyApiFallback: true
   },
 
   watchOptions: {
@@ -74,5 +75,5 @@ module.exports = {
     })
   ],
 
-  devtool: "eval-source-map"
+  devtool: devMode ? "eval-source-map" : "none"
 };
