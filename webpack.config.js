@@ -1,26 +1,28 @@
-const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
-const resolvedPath = fileOrDir => path.resolve(__dirname, fileOrDir)
-const devMode = process.env.NODE_ENV === 'development'
+const resolvedPath = fileOrDir => path.resolve(__dirname, fileOrDir);
+const devMode = process.env.NODE_ENV === "development";
 
-console.log({devMode})
+console.log({ devMode });
 
 module.exports = {
   mode: "development",
   optimization: {
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        compress: {}
-      }
-    })],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {}
+        }
+      })
+    ]
   },
   context: resolvedPath("./app"),
 
   entry: {
-    index: "./initialize.coffee",
+    index: "./initialize.coffee"
   },
 
   output: {
@@ -33,10 +35,13 @@ module.exports = {
   },
 
   module: {
-    rules: [{
-        use: [{
-          loader: "coffee-loader"
-        }],
+    rules: [
+      {
+        use: [
+          {
+            loader: "coffee-loader"
+          }
+        ],
         test: /\.coffee$/,
         exclude: /node_modules/
       },
@@ -50,7 +55,7 @@ module.exports = {
               sourceMap: devMode,
               localIdentName: "[local]"
             }
-          },
+          }
         ],
         test: /\.css$/
       }
@@ -71,7 +76,7 @@ module.exports = {
       filename: "stylesheets/app.css"
     }),
     new HtmlWebpackPlugin({
-      template: 'assets/index.html'
+      template: "assets/index.html"
     })
   ],
 
